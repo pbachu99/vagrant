@@ -1,0 +1,13 @@
+#install feature
+#Install-WindowsFeature DNS -IncludeManagementTools 
+
+#adding DNS primary zone
+#Add-DnsServerPrimaryZone -NetworkID <IP/netmask> -ZoneFile "type-ip.in-addr.arpa.dns"
+#Add-DnsServerPrimaryZone -NetworkID 172.16.1.40/24 -ZoneFile "172.16.1.40.in-addr.arpa.dns"
+
+#adding DNS forwarder - 8 net 
+#Add-DnsServerForwarder -IPAddress 8.8.8.8 -PassThru
+
+#get-netipaddress
+#Set-DnsClientServerAddress -InterfaceAlias "Ethernet 3" -ServerAddresses "172.16.1.40"
+#Set-DnsClientServerAddress -InterfaceAlias ("Ethernet 3", "Ethernet4") -ServerAddresses ("10.0.0.1","10.0.0.2")

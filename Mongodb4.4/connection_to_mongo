@@ -1,0 +1,6 @@
+echo "###############"
+echo "connect with vagrant ssh to the system.
+echo "After server shutdown we start Mongo running the script sh /usr/bin/start_mongod script"
+Connect to mongo with sudo /usr/bin/mongo"
+show dbs to check databases
+echo "###############"

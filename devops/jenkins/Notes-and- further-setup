@@ -1,0 +1,96 @@
+####### Notes and further setup #######
+
+### Jenkins and Maven Installation ###
+
+### Install & configure Maven build tool on Jenkins
+# Prerequisites is Jenkins server
+# Link : https://maven.apache.org/download.cgi
+
+# git packages installation with all the dependencies and related done with *
+# yum install git* -y
+# basic working git package installed
+# sudo yum install git -y
+
+# maven home directory is now
+sudo /opt/maven/apache-maven-3.6.3/
+# Jenkins WAR file found here
+[root@localhost ~]# ll /usr/lib/jenkins
+
+# java related has soft links under
+sudo ll /etc/alternatives/java*
+
+############### plugins setup ##########################
+# it is possible to do CLI for plugins, but I find it is much easier on Tool 
+# belowe are links for doing it
+
+# Default system generated password is
+more /var/lib/jenkins/secrets/initialAdminPassword
+
+# Login to Jenkins or Accessing Jenkins with username admin
+# By default jenkins runs at port 8080 but we access from pc or laptop using 8181 port
+# You can access jenkins now on a webbrowser 
+
+http://localhost:8181 # use localhost to download plugins because we have private IP in Vagrant file
+OR
+http://YOUR-IP:8181 
+
+# Change Admin Password now
+On Getting Started page click X -> start using jenkins
+On top right "admin" -> configure -> password
+Enter your new password and save 
+Login now with admin and new password
+
+# Configure java path now for Jenkins
+
+Manage Jenkins > Global Tool Configuration > JDK -> Add JDK
+Name = JDK_HOME
+JAVA_HOME = /etc/alternatives/java
+Save
+
+# Add Maven home 
+
+# Managing Plugins
+# https://www.jenkins.io/doc/book/managing/plugins/
+
+# jenkins cli download and install for CLI install of plugins
+# https://www.jenkins.io/blog/2019/08/30/jenkins-cli/
+# https://www.jenkins.io/blog/2019/08/30/jenkins-cli/
+
+http://localhost:8181 # use localhost to download plugins as there is private ip in vagrant file
+
+
+############ Setup maven on Jenkins console ##############
+
+# maven home directory is now
+cd /opt/maven/apache-maven-3.6.3
+
+ Install maven plugin without restart
+
+ Manage Jenkins > Jenkins Plugins > available > Maven Invoker
+ Manage Jenkins > Jenkins Plugins > available > Maven Integration
+ click on install without restart
+
+#  Configure Maven home path and JAVA_HOME
+
+Manage Jenkins > Global Tool Configuration > Maven
+Name = JDK_HOME
+JAVA_HOME = /etc/alternatives/java
+
+# Test Jenkins Jobs
+
+    Create “new item”
+    Enter an item name – TestProject
+    Chose Freestyle project
+    Under the Build section Execute shell: echo "Welcome to Jenkins Demo"
+    Save your job
+    Build job
+    Check "console output"
+
+
+# Setup Git on jenkins console
+
+ Install git plugin without restart
+ Manage Jenkins > Jenkins Plugins > available > github
+
+Configure git path
+ Manage Jenkins > Global Tool Configuration > git

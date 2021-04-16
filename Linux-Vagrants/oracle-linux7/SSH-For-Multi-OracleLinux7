@@ -1,0 +1,84 @@
+# to allow SSH between the vagrant boxes using host only adapter requires some changes
+
+# Firewall port 22 was open on windows pc (check the incomming and outgoing port is opened or not for you)
+# Navigation: Firewall&Network protection -> advanced settings
+
+# three vagrant boxes setup already
+# vagrant status
+admin
+server1
+server2
+
+# The entry - virtualbox__intnet: "private" - is in vagrant file for private network setup
+# which is from # Tim Hall of oraclebase " 
+# connect first to admin vagrant box
+vagrant ssh admin
+# Pinging all the three IPs
+ping -c 3  IP
+
+# Add the entries in hosts file on all the 3 servers in case two way SSH required
+echo 'ip admin' | sudo tee -a /etc/hosts
+echo 'ip server1' | sudo tee -a /etc/hosts
+echo 'ip server2' | sudo tee -a /etc/hosts 
+# check hosts file
+more /etc/hosts
+
+# ping check with hostname
+ping -c 3 server1
+ping -c 3 server2
+
+vagrant@admin:~$ ssh server1
+...
+vagrant@server1's password:
+# it will ask for vagrant user password on server1. The password is vagrant
+# type - yes - to add connecting
+vagrant@server1:~$ 
+# exit to exit server1
+
+#### on server1 ####
+# if hosts file has not entries.. it throws the below error
+vagrant@server1:~$ ssh admin
+ssh: Could not resolve hostname admin: Name or service not known...
+
+# Add the entries in hosts file on server1... 
+echo 'ip admin' | sudo tee -a /etc/hosts
+echo 'ip server1' | sudo tee -a /etc/hosts
+echo 'ip server2' | sudo tee -a /etc/hosts 
+# check hosts file
+more /etc/hosts
+
+# connect to admin with ssh admin
+...
+vagrant@admin's password:
+# it will ask for vagrant user password on server1. The password is vagrant
+# type - yes - to add connecting
+
+vagrant@admin:~$ exit
+Connection to admin closed.
+vagrant@server1:~$
+
+#### on server2 ####
+same steps to be repeated as it was for server1
+
+###### cofigure SSH without password #########
+
+# on admin server
+ssh-keygen
+press enter key - 3 times - 
+
+# we copy this password file to server1
+ssh-copy-id server1
+yes 
+enter password for vagrant which is 'vagrant'
+
+# check 
+ssh server1 
+ssh server1 hostname
+# Now SSH connectivity should establish without password
+
+# ssh copy to server2
+ssh-copy-id server2
+ssh server2
+
+
+

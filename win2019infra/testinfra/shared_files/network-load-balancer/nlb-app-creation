@@ -1,0 +1,26 @@
+https://docs.microsoft.com/en-us/windows-server/networking/technologies/network-load-balancing
+# command line
+Install-WindowsFeature NLB -IncludeManagementTools
+https://docs.microsoft.com/en-us/powershell/module/networkloadbalancingclusters/new-nlbcluster?view=winserver2012r2-ps&redirectedfrom=MSDN
+
+mkdir e:\clusterapp
+Copy-Item -Path C:\inetput\wwwroot\*  E:\clusterapp\ -Recurse
+IIS:\>New-WebSite -Name clusterapp -Port 11000 -HostHeader clusterSite -PhysicalPath "E:\clusterapp"
+
+cluster ports - 9876  single host & single host
+on one node - change priority to 10
+
+new-website -name "" -physicalpath "" -port 3333
+New-WebSite -Name clusterapp -Port 11000 -HostHeader clusterSite -PhysicalPath "E:\clusterapp"
+New-WebSite -Name clusterapp -Port 11000 -PhysicalPath "E:\clusterapp"
+New-NetFirewallRule -DisplayName "clusterapp" -Direction inbound -LocalPort 11000 -profile domain,private -Protocol TCP -Action allow
+
+# shared drive scenario
+https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.management/new-psdrive?view=powershell-7.1
+
+New-PSDrive -Name "X" -Root "\\dc-sys3\e\" -Persist -PSProvider "FileSystem" -scope "Global"
+Net Use
+
+Status       Local     Remote                    Network
+---------------------------------------------------------
+OK           S:        \\Server01\Scripts        Microsoft Windows Network

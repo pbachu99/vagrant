@@ -1,0 +1,106 @@
+# Learning VI editor
+# Assuming you are familiar with basics of vi editor modes -> Command, Insert, Append and Replace
+# This is simplest way worked for me for remembering 
+
+# movement and inserting
+up -  k
+down - j
+left - h
+right - l
+
+gg - go to first line of the page 
+G -  go to last line of the page
+Go - to to last last line and open a new line
+O - insert new line above the cursor
+^ (shift key) - go to beginning of the line
+$ (shift key) - go to end of the line
+
+I - insert at the beginning of the line
+A - append at the end of the line
+a - append after the cursor
+
+:n - go to line n
+example :23 - to go to 23 line
+tip: :se nu - sets the line numbers to the file
+
+e - jump from word to word 
+
+# replacing (by pressing keys below given)
+r - replacing character
+cw - change word 
+cc - change line
+
+# deleting 
+(replacing and deleting are similar in some way but usability differs)
+x - delete character
+dw - delete word
+dd - delete line
+
+# copy and paste
+# copy
+examples:
+copy word - yw (note: the cursor should be at the start of word to copy a specific word)
+copy line  - yy
+
+example copy and paste a line: 
+we copy line -> this is the time to do 
+* cursor is now on 't' in 'this'
+* press yy - line copied
+* lets say we paste it on a new line below to it.
+* press 'o' and then esc
+* press P (shift+p) - it is capital p
+* now a new line is pasted just below to it
+#Paste
+p - paste after cursor
+P - Paste before cursor
+
+# undow and redo
+u - undo
+ctrl+r - redo
+
+# copy block of lines 
+* as we do in word document with 'shift+ up arrow' to select lines
+* and after that ctrl+c and ctrl+v
+
+* the lines to be copied
+ the first line to copy
+ the second line to copy
+ the third line to copy
+ 
+-> to copy from bottom to up where the cursor is present
+v3k - visual - 3 lines - k for up 
+-> to copy from top to bottom
+v3j - visual - 3 lines - j for down
+
+* press 'y' for the lines to be yanked/copied
+* by pressing - p or P - paste where needed
+* by pressing 'u' we do undo if unsatisfied with paste operation
+
+#save and quit
+:w save 
+:wq write/save and quit
+:q quit
+:q! do not save changes
+:wq! force write and quit
+
+# searching - similar to ctrl+f in word 
+/{pattern}- called forward search
+?{pattern}
+n - search moves down
+N - search moves up
+
+#find and replace
+:s{old}/{new}/options - find and replace on current line
+:%s{old}/{new}/options - find and replace in the entire document
+In the latter ':%s...' the 'g' option substitures all the occurances on a line
+
+
+
+
+
+
+
+
+
+
+

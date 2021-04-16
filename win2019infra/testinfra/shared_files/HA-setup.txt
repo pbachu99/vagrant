@@ -1,0 +1,2 @@
+HA cluster setup
+https://robertsmit.wordpress.com/2018/11/29/step-by-step-windows-server-2019-file-server-clustering-with-powershell-or-gui-cluster-ha-azure-windowsadmincenter-windowsserver2019/

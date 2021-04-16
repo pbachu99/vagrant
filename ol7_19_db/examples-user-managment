@@ -1,0 +1,50 @@
+# creating a local admin account and container admin account
+#### local admin account ####
+
+# while creating pdb2 we created an account pdb_adm
+-- CREATE PLUGGABLE DATABASE pdb2 ADMIN USER pdb_adm IDENTIFIED BY PdbPassword1 ....
+# this account has no 'connect' and 'create session' privileges
+
+CREATE ROLE c##s_c_role
+GRANT CREATE SESSION TO c##s_c_role
+GRANT CONNECT TO c##s_c_role
+
+ALTER SESSION SET CONTAINER=pdb2
+GRANT c##s_c_role to pdb_adm 
+GRANT DBA TO pdb_adm 
+
+# check
+[oracle@localhost]$ sqlplus pdb_adm/PdbPassword1@pdb2
+SQL> show user
+USER is "PDB_ADM"
+
+SQL> sho con_name
+CON_NAME
+-----------------
+PDB2
+
+SQL> alter pluggable database pdb2 open read only force;
+SQL> alter pluggable database pdb2 open read write force;
+Pluggable database altered.
+
+#### container admin account ####
+
+-- ALTER SESSION SET CONTAINER=cdb$root
+-- show user (with sys account created )
+
+CREATE USER c##cdb_adm IDENTIFIED BY PdbPassword1 CONTAINER=ALL
+
+GRANT DBA TO c##cdb_adm container=all
+GRANT CDB_DBA TO c##cdb_adm container=all
+
+SQL> conn c##cdb_adm/PdbPassword1@pdb1
+Connected.
+SQL> alter session set container=pdb2;
+Session altered.
+SQL> sho con_name
+CON_NAME
+-------------------
+PDB2
+
+Now SYS account can be locked too 
+

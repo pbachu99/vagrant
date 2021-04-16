@@ -1,0 +1,32 @@
+Name --- Profile	
+Active Directory Domain Controller 
+Core Networking 
+DHCP related
+DFS Management
+DFS Replication (optional)
+DNS 
+file and printer sharing
+file and printer sharing over smb direct
+file replication
+File Server Remote Management 
+remote file server resource manager management
+
+Network Discovery
+Network Logon 
+Remote Desktop 
+Remote Service Management 
+Remote Volume Management 
+Windows Remote Management 
+iscsi 
+iscsi target group
+
+some other added as per need:
+cluster related:
+1. failover cluster manager
+2. failover clusters 
+smb witness
+
+Others and optional 
+web management http traffic
+rpc server service creation like winrm in GP
+services creation on gp editor screenshot

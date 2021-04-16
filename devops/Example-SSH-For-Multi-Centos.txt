@@ -1,0 +1,88 @@
+# to allow SSH between the vagrant boxes using host only adapter requires some changes
+# this is the issue I found running vagrant on a windows 10 pc for centOS7 vagrant boxes
+# Firewall port 22 was open on windows pc (check the incomming and outgoing port is opened or not for you)
+# Navigation: Firewall&Network protection -> advanced settings
+
+# three vagrant boxes setup already
+# vagrant status
+admin
+server1
+server2
+
+# The entry - virtualbox__intnet: "private" - is in vagrant file for private network setup
+# which is from # Tim Hall of oraclebase " However, it has not worked for centOS7 
+# connect first to admin vagrant box
+vagrant ssh admin
+# Pinging all the three IPs
+ping -c 3  IP
+
+# Add the entries in hosts file on all the 3 servers in case two way SSH required
+echo 'ip admin' | sudo tee -a /etc/hosts
+echo 'ip server1' | sudo tee -a /etc/hosts
+echo 'ip server2' | sudo tee -a /etc/hosts 
+# check hosts file
+more /etc/hosts
+
+# ping check with hostname
+ping -c 3 server1
+ping -c 3 server2
+
+# SSH configuration on server1 and server2, in case the scenario of SSH is # one direction #
+Admin -> server1
+Admin -> server2
+
+###### cofigure SSH without password #########
+# On server1 and server2 login as root or with sudo
+# the numbers are the line numbers of the file
+/etc/ssh/sshd_config
+ 43 PubkeyAuthentication yes # uncomment first
+ 63 PasswordAuthentication yes  # uncomment first
+ 
+ /etc/ssh/ssh_config
+ 25    PasswordAuthentication yes
+ 41    Port 22
+
+# sshd restart on both server1 and server2
+systemctl restart sshd.service  
+
+# on admin server
+ssh-keygen
+press enter key - 3 times - 
+
+# we copy this password file to server1
+ssh-copy-id server1
+yes 
+enter password for vagrant which is 'vagrant'
+# check 
+ssh server1 
+ssh server1 hostname
+# Now SSH connectivity should establish without password
+
+# ssh copy to server2
+ssh-copy-id server2
+ssh server2
+
+# With that working SSH, now we can revert back settings 
+# in /etc/ssh/sshd_config
+ 65 PasswordAuthentication no #comment
+ 63 PasswordAuthentication yes #comment 
+ 
+# basic script test
+# create a script on admin server 'check_server.sh'
+CMD1='hostname'
+CMD2='uptime'
+ssh server1 "${CMD1} ; ${CMD2}"
+ssh server2 'ps -ef | head -3'
+
+
+
+
+
+
+
+
+
+
+
+
+

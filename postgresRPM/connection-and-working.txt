@@ -1,0 +1,50 @@
+# Notes # connecting and working
+vagrant ssh (connecting to server)
+su - root
+and password for root is vagrant
+
+# Postgres repository 
+ll /etc/yum.repos.d/pgdg-redhat-all.repo
+
+# check both dbs directory
+ll /var/lib/pgsql/
+
+# Default directories for postgres 12 (same is with 13; check directories under 13)
+ll /var/lib/pgsql/12/data/
+ll /usr/pgsql-12/bin/
+ll /var/lib/pgsql/12
+
+# configuration file of postgres 12
+postgresql.conf 
+ll /var/lib/pgsql/12/data/postgresql.conf 
+
+# checks for 12
+grep listen_addresses /var/lib/pgsql/12/data/postgresql.conf 
+grep -v -E "^#|^$" /var/lib/pgsql/12/data/pg_hba.conf 
+
+# creating test user and test database
+su - postgres
+createuser pgguy
+createdb testdb -O pgguy
+# it is usename but not username
+psql -c "select usename from pg_user;"
+
+# list of databases
+psql -l
+# connect to testdb
+su - pgguy
+psql testdb
+# show user roles
+testdb=> \du
+
+# show databases
+testdb=> \l
+
+# show tables
+testdb=> \dt 
+
+# exit
+testdb=> \q 
+
+# remove testdb
+[pgguy@pgres12]$ dropdb testdb 

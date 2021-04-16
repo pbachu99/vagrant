@@ -1,0 +1,31 @@
+# Creating SAS/SCSI disks of fixed size
+VBoxManage createmedium disk --filename clsd1 --size 2048 --format VHD --variant Fixed
+VBoxManage createmedium disk --filename clsd2 --size 2048 --format VHD --variant Fixed
+VBoxManage createmedium disk --filename clsd3 --size 2048 --format VHD --variant Fixed
+VBoxManage createmedium disk --filename clsd4 --size 1024 --format VHD --variant Fixed
+
+# Creation of SAS Controller 
+VBoxManage storagectl vm_name --name "LSILogicSAS" --add sas --controller  LSILogicSAS
+VBoxManage storagectl vm_name --name "LSILogicSAS" --add sas --controller  LSILogicSAS
+
+# Make disks shareable
+VBoxManage modifymedium disk clsd1.vhd --type shareable
+VBoxManage modifymedium disk clsd2.vhd --type shareable
+VBoxManage modifymedium disk clsd3.vhd --type shareable
+VBoxManage modifymedium disk clsd4.vhd --type shareable
+
+# Connect them to the 1st VM
+VBoxManage storageattach vm_name --storagectl "LSILogicSAS" --port 0 --device 0 --type hdd  --medium clsd1.vhd --mtype shareable
+VBoxManage storageattach vm_name --storagectl "LSILogicSAS" --port 1 --device 0 --type hdd  --medium clsd2.vhd --mtype shareable
+VBoxManage storageattach vm_name --storagectl "LSILogicSAS" --port 2 --device 0 --type hdd  --medium clsd3.vhd --mtype shareable
+VBoxManage storageattach vm_name --storagectl "LSILogicSAS" --port 3 --device 0 --type hdd  --medium clsd4.vhd --mtype shareable
+
+
+# Connect them to the 2nd VM
+VBoxManage storageattach vm_name --storagectl "LSILogicSAS" --port 0 --device 0 --type hdd --medium clsd1.vhd --mtype shareable
+VBoxManage storageattach vm_name --storagectl "LSILogicSAS" --port 1 --device 0 --type hdd --medium clsd2.vhd --mtype shareable
+VBoxManage storageattach vm_name --storagectl "LSILogicSAS" --port 2 --device 0 --type hdd  --medium clsd3.vhd --mtype shareable
+VBoxManage storageattach vm_name --storagectl "LSILogicSAS" --port 3 --device 0 --type hdd  --medium clsd4.vhd --mtype shareable
+
+
+# Connect them to the 3rd VM

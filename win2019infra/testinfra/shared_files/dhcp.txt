@@ -1,0 +1,42 @@
+#deploy DHCP
+https://docs.microsoft.com/en-us/windows-server/networking/technologies/dhcp/dhcp-deploy-wps
+
+#all features install explanation
+https://malwaremily.medium.com/install-ad-ds-dns-and-dhcp-using-powershell-on-windows-server-2016-ac331e5988a7
+
+#configure static ip for DHCP
+New-NetIPAddress -InterfaceIndex 2/4/8 -IPAddress IP -prefixlength 24 -defaultgateway IP
+
+# install-windowsfeature DHCP -includemanagementtools
+
+#configure DHCP Security groups
+# netsh dhcp add securitygroups
+# restart-service dhcpserver
+
+# authorize on screen or command line
+
+# dhcp server added to the DC
+#Add-DhcpServerInDC -DnsName sys4-dc.praveen.local -IpAddress 172.16.1.2
+
+#verify
+Get-DhcpServerInDC
+
+# notify server manager
+Set-ItemProperty –Path registry::HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\ServerManager\Roles\12 –Name ConfigurationState –Value 2
+
+------
+
+# creating ipv4 scope 
+#Add-DHCPServerv4Scope -Name “Scope-192” -StartRange 192.168.1.10 -EndRange 192.168.1.50 -SubnetMask 255.255.255.0 -State Active
+
+# lease for 7 days
+#Set-DhcpServerv4Scope -ScopeId 192.168.1.0 -LeaseDuration 7.00:00:00 
+
+#authorize DHCP in the domain
+Set-DHCPServerv4OptionValue -ScopeID 192.168.1.0 -DnsDomain sys4-dc.praveen.local -DnsServer 172.16.1.40 -Router 192.168.1.1
+
+#verify DHCP Scope
+Get-DhcpServerv4Scope
+
+# renew a IPAddress
+ipconfig /renew

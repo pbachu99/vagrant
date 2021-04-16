@@ -1,0 +1,49 @@
+# creating pluggable database from pdbseed 
+# in this installation the pdbseed is found here
+-- /u02/oradata/CDB1/pdbseed/
+
+# Creating pdb2 using FILE_NAME_CONVERT (one method)
+CREATE PLUGGABLE DATABASE pdb2 ADMIN USER pdb_adm IDENTIFIED BY PdbPassword1
+  FILE_NAME_CONVERT=('/u02/oradata/CDB1/pdbseed/','/u02/oradata/CDB1/pdb2/');  
+
+# Creating pdb3 using FILE_NAME_CONVERT (one method)
+CREATE PLUGGABLE DATABASE pdb3 ADMIN USER pdb_adm IDENTIFIED BY PdbPassword1
+  FILE_NAME_CONVERT=('/u02/oradata/CDB1/pdbseed/','/u02/oradata/CDB1/pdb3/');  
+  
+# check pdbs using show pdbs and the pdb state will be in mounted, but not read and write
+-- SHOW pdbs
+
+# to put the pdbs in read and write and "save this state" after reboot of the container
+SQL>ALTER PLUGGABLE DATABASE pdb2 open read write
+ 
+# Assuming only pdb2 to be put in read and write and to save this state 
+- ALTER PLUGGABLE DATABASE pdb2 SAVE STATE
+
+# To Discard the save state
+ALTER PLUGGABLE DATABASE pdb2 DISCARD STATE;  
+
+# check the maximum pdbs allowed
+show parameter max_pdbs
+  
+# Setting max_pdbs count to 3 
+SQL> ALTER SYSTEM SET MAX_PDBS=3  
+
+# network connections 
+# both the Listener and TNS working
+[oracle@localhost scripts]$ lsnrctl reload
+[oracle@localhost scripts]$ tnsping pdb1
+
+# Creating a new TNS for PDB2 database
+# In this installation it is found here and no hostname and /etc/hosts not configured
+- /u01/app/oracle/product/19.0.0/dbhome_1/network/admin/tnsnames.ora
+# the very basic setting works 
+PDB2 =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL = TCP)(HOST = 0.0.0.0)(PORT = 1521))
+    (CONNECT_DATA =
+      (SERVER = DEDICATED)
+      (SERVICE_NAME = pdb2)
+    )
+  )
+[oracle@localhost scripts]$ tnsping pdb2
+

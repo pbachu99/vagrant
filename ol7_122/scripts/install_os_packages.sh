@@ -1,0 +1,18 @@
+echo "******************************************************************************"
+echo "Prepare yum with the latest repos." `date`
+echo "******************************************************************************"
+echo "nameserver 8.8.8.8" >> /etc/resolv.conf
+
+yum install -y yum-utils zip unzip
+yum install -y oracle-database-server-12cR2-preinstall
+#yum update -y
+
+# Configure rlwrap for SQL*Plus command history.
+yum install -y oracle-epel-release-el7
+yum-config-manager --enable ol7_developer_EPEL
+yum install -y rlwrap
+
+cat >> /home/oracle/.bash_profile <<EOF
+alias sqlplus='rlwrap sqlplus'
+alias rman='rlwrap rman'
+EOF

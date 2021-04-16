@@ -1,0 +1,11 @@
+ssh-copy-id server12
+type - yes
+enter password vagrant
+
+ssh-copy-id server11
+type - yes
+enter password vagrant
+
+now we can login without password
+ssh server11 on server12
+ssh server12 on server11

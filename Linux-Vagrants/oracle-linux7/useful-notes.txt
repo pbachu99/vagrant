@@ -1,0 +1,29 @@
+## In this vagrant box we create: Private IP, a directory 'scripts' 
+## and check whether a nested script is called or not
+## The vagrant file has the settings/parameter for this to work
+
+$ pwd
+/d/git/vagrant/Linux-vagrants/
+
+## created a directory for Oracle 7 Server setup inside 'Linux-vagrants'
+mkdir oracle-linux7
+cd oracle-linux7
+mkdir scripts
+cd scripts
+
+## the very basic code in the script 'myscript.sh'
+$ cat myscript.sh
+#!/bin/bash
+echo "calling another-script"
+sh /vagrant/scripts/anothertest-1.sh
+
+## the very basic code in script 'anothertest-1.sh'
+$ cat anothertest-1.sh
+ls -la /home/vagrant/
+
+## the below output shown when the nested script runs during provision of this vagrant box
+#==> default: Running provisioner: shell...
+#    default: Running: inline script
+#    default: calling another-script
+#    default: total 16
+#    default: drwx------. 3 vagrant vagrant  95 Jul 17 07:38 .

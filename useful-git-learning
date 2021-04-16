@@ -1,0 +1,64 @@
+# Learing Git 
+https://www.youtube.com/watch?v=xuB1Id2Wxak&t=4362s
+*** On the above link: From start to 40:00 suitable for new to Git, after that some useful to get started
+
+*** To the point for getting started on the below link
+https://www.youtube.com/watch?v=SWYqp7iY_Tc
+
+# Setup git
+https://oracle-base.com/articles/linux/git-cheat-sheet
+
+# the below file is used to ignore the kind of files not used for push and pull etc
+# this is uploaded
+vi .gitignore 
+
+# set config for account
+git config --global user.name "xxxx xxxx"
+git config --global user.email mymail@gmail.com
+git config --list
+
+++++++ example cloning a publicly open git! In this case Oracle Base +++++++++
+git clone https://github.com/oraclebase/vagrant.git
+
+## check
+ls
+cd vagrant/
+ll
+cd database/
+ll
+
+++++++++++ set up default editior ++++++++++
+## in my case the editor installed directly under C partition but not under program files
+  
+git config --global core.editor "'C:\Notepad++\notepad++' -multiInst -notabbar -nosession -noPlugin"
+
+## checking it is working or not. Either way it works
+start notepad++ Vagrantfile 
+start Notepad++/notepad++.exe 
+
+### set an alias on Git command window for notepad++
+alias npp="/c/Notepad++/notepad++.exe"
+
+# the better and right way is creating a bash_profile
+$ cat ~/.bash_profile
+alias npp='/c/Notepad++/notepad++.exe'
+alias vg='cd /d/git/vagrant/'
+
+### an example for editing file 
+$ npp Vagrantfile 
+
+# some alias I set are below. The env directory has sh scripts for start and stop vagrant boxes
+# For example starting the entire RAC or Dataguard takes time, so it is better to script
+$ alias
+alias db19='cd /d/git/vagrant/ol7_19_db'
+alias npp='/c/Notepad++/notepad++.exe'
+alias rac='cd /d/git/vagrant/rac/'
+alias shs='cd /d/git/vagrant/env'
+alias vg='cd /d/git/vagrant/'
+
+# Advance troubleshoot - git repo
+* https://docs.github.com/en/free-pro-team@latest/github/managing-large-files/removing-files-from-a-repositorys-history
+* https://docs.github.com/en/free-pro-team@latest/github/authenticating-to-github/removing-sensitive-data-from-a-repository
+* https://rtyley.github.io/bfg-repo-cleaner/
+
+

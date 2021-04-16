@@ -1,0 +1,85 @@
+# The passwords stored in 'install_env' script found under 'config' directory
+ROOT_PASSWORD=rootpasswd
+ORACLE_PASSWORD=oracle
+SYS_PASSWORD=SysPassword1
+
+# PDB password
+PDB_NAME="pdb1"
+PDB_PASSWORD="PdbPassword1"
+
+# connecting DB after log on as Vagrant (below is one way)
+sudo su - oracle 
+OR we can open a putty session with a public IP for each Node
+
+# environment scripts
+/home/oracle/scripts
+
+# the setEnv.sh has aliases for 'grid' and 'cluster database-db_env' environment 
+# just run this using -- sh setEnv.sh
+
+# check 
+echo $ORACLE_SID
+
+# running db_env and grid_env sets the required environment
+-- $db_env and $grid_env
+# check 
+echo $ORACLE_SID
+
+# basic useful checks
+-- ps -ef | grep -i pmon ---and---  env | grep ORA
+
+# connecting to other hosts via ssh and check status
+-- ssh ol7-19-rac2 ps -ef|grep -i pmon
+oracle    6054     1  0 14:20 ?        00:00:01 asm_pmon_+ASM2
+oracle    7788     1  0 14:21 ?        00:00:01 ora_pmon_cdbrac2
+--ssh ol7-19-rac1 ps -ef|grep -i pmon
+oracle    6549     1  0 14:24 ?        00:00:01 asm_pmon_+ASM1
+oracle    6937     1  0 14:24 ?        00:00:01 ora_pmon_cdbrac1
+
+# using tnsping to nodes 
+-- tnsping ol7-19-rac2
+-- tnsping ol7-19-rac1
+
+
+# login to DATABASE by
+# typing -- sqlplus sys as sysdba--- and press'enter' key takes to SQL prompt
+
+# Check Oracle DATABASE is Container or not. Shows 'yes' it is Container DATABASE
+SQL> SELECT CDB FROM V$DATABASE;
+
+# Check and list Pluggable DATABASES with
+SQL> show pdbs;
+# Exit to connect to srvctl to see it is RAC DATABASE
+# There are several ways to check this
+
+######################################
+# set the grid environment and displays all the details
+-- $ grid_env
+-- [oracle@ol7-19-rac1 scripts]$ srvctl config database
+cdbrac
+-- [oracle@ol7-19-rac1 scripts]$ srvctl config database -d cdbrac
+
+[oracle@ol7-19-rac1 scripts]$ srvctl status database -d cdbrac
+Instance cdbrac1 is running on node ol7-19-rac1
+Instance cdbrac2 is running on node ol7-19-rac2
+
+# srvctl help example. status/stop/
+# displays the current state of the VIP, just an example
+-- srvctl status vip -help
+
+-- OR srvctl -help (provides entire help)
+
+# Getting crsctl help. Displays the entire help
+-- crsctl --help
+# Example help for crsctl check
+-- crsctl check --help
+
+# Connect to pluggable DATABASE pdb1 of this installation
+SQL> ALTER SESSION SET CONTAINER=PDB1;
+
+Listener and tns status of pdb1 service checked at SQL Prompt as below 
+SQL> host lsnrctl status
+SQL> host tnsping pdb1
+
+# to stop everything from /home/oracle/scripts 
+sh stop_all.sh

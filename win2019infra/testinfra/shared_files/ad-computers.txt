@@ -1,0 +1,35 @@
+https://support.infrasightlabs.com/article/how-to-enable-winrm-on-windows-servers-clients/
+
+check after wsman activated
+PS C:\Users\Administrator> $cred=New-Object System.Management.Automation.PSCredential -ArgumentList @('administrator',(ConvertTo-SecureString 'vagrant' -AsPlainText -force))
+PS C:\Users\Administrator> Invoke-Command -ComputerName sys2-dc -ScriptBlock {hostname} -Credential $cred
+sys2-dc
+PS C:\Users\Administrator>
+
+
+get-adcomputer -filter * | select-object @ { name="computername"; expression={
+$_.name } }
+
+* After getting the output we can pipe to pssession, (*** the below piping creates a session
+to all the computers in the domain )
+* get-adcomputer -filter * | select-object @ { name="computername"; expression={$_.name
+} } | pssession
+VERIFICATION OF OPENED SESSIONS OR THE SESSIONS ESTABLISHED ALREADY
+* get-pssession
+REMOVE PSSESSIONS OR SESSIONS
+* get-pssession | remove-pssession
+CREATE or ASSIGN A NAME TO A SESSION
+* get-adcomputer -filter * | select-object @{name="computername";
+expression={$_.name}} | new-pssession -name domaincomputers
+* Verify: get-pssession -name domaincomputers (domaincomputers is the name we
+assigned)
+CREATING A VARIABLE FOR MANAGING SESSIONS
+Ex . - $domaincomputers = get-adcomputer -filter * | select-object
+@{name="computername"; expression={$_.name}} | new-pssession
+Verify:
+* $domaincomputers (shows the sessions opened )
+* remove-pssession $domaincomputers (removes any opened Sessions)
+----------
+doing it on DC
+PS C:\Users\Administrator> get-adcomputer -filter *
+

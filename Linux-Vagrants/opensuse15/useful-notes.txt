@@ -1,0 +1,19 @@
+## we create a directory for opensuse15
+mkdir opensuse15
+cd opensuse15/
+
+## we create an init file using the command below for opensuse-leap-15
+## there are some changes to be done to this file!
+  
+*  vagrant init bento/opensuse-leap-15.2
+
+## edit this init file as shown in my vagrant file    
+
+## After that we start up using 
+*  vagrant up
+
+## connect   
+*  vagrant ssh
+
+## To delete this server we use the command
+*  vagrant destroy -f

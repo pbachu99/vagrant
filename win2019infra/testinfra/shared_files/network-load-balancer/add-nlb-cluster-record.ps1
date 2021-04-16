@@ -1,0 +1,1 @@
+Add-DnsServerResourceRecordA -Name "praveencluster" -ZoneName "praveen.local" -AllowUpdateAny -IPv4Address "192.168.1.122" -TimeToLive 01:00:00

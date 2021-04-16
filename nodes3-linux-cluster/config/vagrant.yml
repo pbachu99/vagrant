@@ -1,0 +1,32 @@
+shared:
+  box: oraclebase/oracle-8.2
+  non_rotational: 'on'
+  
+dns:
+  vm_name: ol8_dns
+  mem_size: 1024
+  cpus: 1
+  public_ip: 192.168.56.100
+
+node1:
+  vm_name: ol8_sys1
+  mem_size: 2048
+  cpus: 2
+  public_ip: 192.168.56.101
+  private_ip: 192.168.1.101
+  
+
+node2:
+  vm_name: ol8_sys2
+  mem_size: 2048
+  cpus: 2
+  public_ip: 192.168.56.102
+  private_ip: 192.168.1.102
+  
+node3:
+  vm_name: ol8_sys3
+  mem_size: 2048
+  cpus: 2
+  public_ip: 192.168.56.103
+  private_ip: 192.168.1.103
+

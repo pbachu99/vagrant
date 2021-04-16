@@ -1,0 +1,44 @@
+# The passwords stored in oracle_user_environment_setup.sh script
+SYS_PASSWORD="SysPassword1"
+ORACLE_PASSWORD="oracle"
+
+# PDB password
+PDB_NAME="pdb1"
+PDB_PASSWORD="PdbPassword1"
+
+# connecting DB after log on as Vagrant (below is one way)
+sudo su - oracle 
+
+# /home/oracle/scripts 
+the scripts for starting and environment setup
+
+# start db
+sh start_all.sh
+# rlwrap Linux package was not installed (Found in install_os_packages.sh)
+# Install it 
+# [oracle@localhost scripts]$ alias
+
+# check 
+echo $ORACLE_SID
+
+#login to DATABASE
+
+typing !sq and 'enter' key takes to SQL prompt
+OR -> sqlplus sys as sysdba
+
+# Check Oracle DATABASE is Container or not. If yes it is Container DATABASE
+SQL> SELECT CDB FROM V$DATABASE;
+
+# Check and list Pluggable DATABASES with
+SQL> show pdbs;
+
+# Connect to pluggable DATABASE pdb1 in this installation
+SQL> ALTER SESSION SET CONTAINER=PDB1;
+
+
+# Listener and tns status of pdb1 service checked at SQL Prompt as below 
+SQL> host lsnrctl status
+SQL> host tnsping pdb1
+
+# to stop everything from /home/oracle/scripts 
+sh stop_all.sh

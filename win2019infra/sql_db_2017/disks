@@ -1,0 +1,12 @@
+#we create 40GB dynamic disk for SQL related (the space grows as the data grows)
+VBoxManage createmedium disk --filename sqldisk1 --size 40960 --format VHD --variant Standard
+
+# attach to virtual machine
+VBoxManage storageattach vag_sql_db_2017 --storagectl "SATA Controller" --port 2 --device 0 --type hdd  --medium sqldisk1.vhd --nonrotational "on" --mtype normal
+
+#output 
+MINGW64 /d/git/vagrant/win2019infra/sql_db_2017 
+$ VBoxManage createmedium disk --filename sqldisk1 --size 40960 --format VHD --variant Standard
+0%...10%...20%...30%...40%...50%...60%...70%...80%...90%...100%
+Medium created. UUID: 39abdb38-xxxxxxxxxxx
+

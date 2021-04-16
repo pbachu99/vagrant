@@ -1,0 +1,11 @@
+netdom computername dc-sys1 /add a-sys2.praveen.local
+
+Add-DnsServerResourceRecordA -Name "a-sys2" -ZoneName "praveen.local" -AllowUpdateAny -IPv4Address "192.168.1.120" -TimeToLive 01:00:00
+
+If the changes are not working please do following :
+
+    Locate the following key in the registry: HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\LanmanServer\Parameters
+    add the following registry value: DisableStrictNameChecking as REG_DWORD, its value should be 1
+	
+--------------
+	

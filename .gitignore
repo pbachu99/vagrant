@@ -1,0 +1,14 @@
+# Software Files #
+##################
+*.gz
+*.zip
+*.jar
+.vagrant
+*.bin
+*.vdi
+*.msi
+*.exe
+*.vhd
+*.iso
+*.bak 
+*.vmdk

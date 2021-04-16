@@ -1,0 +1,85 @@
+# passwords stored in install.env file
+ROOT_PASSWORD=rootpasswd
+ORACLE_PASSWORD=oracle
+SYS_PASSWORD="S1sPassword1!"
+PDB_PASSWORD="PdbPassword1!"
+
+# Basic initial checks to know what's runninng
+# run on both nodes - primary and standby
+ps -ef | grep -i pmon
+ps -ef | grep -i TNS
+env | grep ORA # This environment is set in .bash_profile of Oracle
+** [oracle@ol7-19-dg1 ~]$ more .bash_profile
+
+# environment script is in 'scripts' directory on both servers
+[oracle@ol7-19-dg1 scripts]$ pwd
+/home/oracle/scripts
+[oracle@ol7-19-dg1 scripts]$ more setEnv.sh
+
+# connections checks (on both shows nothing shows)
+# /etc/oratab shows too DB is not auto start
+lsnrctl status
+tnsping cdb1
+tnsping cdb1_stby
+lsnrctl status
+
+# connection to oracle database and Dataguard broker
+# on Primary database
+[oracle@ol7-19-dg1 ~]$ sqlplus sys as sysdba
+* one way: press enter key and it will be connected
+SQL> startup
+* database starts up
+* lsnrctl start #start the listener as it was showing it was not started
+* tnsping cdb1  # 
+* tnsping cdb1_stby # ping 
+
+# on another machine (standby)database to be started
+[oracle@ol7-19-dg2 ~]$ sqlplus sys as sysdba
+SQL> startup
+[oracle@ol7-19-dg2 ~]$ lsnrctl start
+[oracle@ol7-19-dg2 ~]$ tnsping cdb1_stby
+[oracle@ol7-19-dg2 ~]$ tnsping cdb1
+
+
+
+# Dataguard broker
+* on primary database
+[oracle@ol7-19-dg1 ~]$ dgmgrl sys/S1sPassword1!
+* it displays status: 
+Welcome to DGMGRL, type "help" for information.
+Connected to "cdb1"
+Connected as SYSDBA.
+DGMGRL> show database cdb1
+DGMGRL> show configuration;
+
+* on standby database
+[oracle@ol7-19-dg2 ~]$ dgmgrl sys/S1sPassword1!
+DGMGRL> show configuration;
+DGMGRL> show database cdb1_stby
+
+* some useful commands and finding information with help
+DGMGRL> validate network configuration for all;
+DGMGRL> help
+DGMGRL> help enable;
+DGMGRL> help start
+
+# SQLDeveloper
+* creating connection for primary database using 'sys' account
+* it is better to create an account with DBA role rather using sys account
+name:oracle-n1-dg
+user name : sys and role:sysdba
+passwords given above
+hostname is in vagrant.yml file 
+port: 1521 and service is cdb1
+connection type in this case is 'basic' (there are other methods like tns etc)
+*  click on 'test' for connection test
+
+* creating connection for primary database using 'sys' account
+* it is better to create an account with DBA role rather using sys account
+name:oracle-n2-dg
+user name : sys and role:sysdba
+passwords given above
+hostname is in vagrant.yml file 
+port: 1521 and service is cdb1_stby
+connection type in this case is 'basic' (there are other methods like tns etc)
+*  click on 'test' for connection test

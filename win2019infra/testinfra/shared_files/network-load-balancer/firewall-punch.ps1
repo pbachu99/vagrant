@@ -1,0 +1,1 @@
+New-NetFirewallRule -DisplayName "testapp" -Direction inbound -LocalPort 2345 -profile domain,private -Protocol TCP -Action allow

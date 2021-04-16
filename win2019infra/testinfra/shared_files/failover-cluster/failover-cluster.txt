@@ -1,0 +1,8 @@
+https://docs.microsoft.com/en-us/windows-server/failover-clustering/create-failover-cluster
+
+Install-WindowsFeature –Name Failover-Clustering –IncludeManagementTools
+
+https://docs.microsoft.com/en-us/powershell/module/failoverclusters/add-clusterfileserverrole?view=win10-ps
+
+Note: This cmdlet cannot be run remotely without Credential Security Service Provider (CredSSP) authentication on the server computer.
+

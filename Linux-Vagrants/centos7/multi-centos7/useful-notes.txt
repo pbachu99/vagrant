@@ -1,0 +1,28 @@
+## spin up multi centos 7 servers. In this case we setup 3 servers 
+## inside centos7 directory
+cd centos7/
+
+mkdir multi-centos7
+cd multi-centos7/
+## the vagrant file has the details to setup or spin up 3 servers
+## issuing the command -- vagrant up -- will start the setup
+
+## check the machine names using: 
+* vagrant status
+
+# Note: the passwords for vagrant user and root is 'vagrant'
+
+## in this case it shows up:  admin, server1 and server2
+## connecting individual servers 
+  
+ vagrant ssh admin
+# 'exit' to exit connection from admin server
+ 
+ vagrant ssh server1
+ vagrant ssh server2
+
+# to shut down servers to connect and use again we use
+ vagrant halt
+ 
+# using this command all the 3 servers are deleted. Obviously using 'vagrant up' again the 3 servers created 
+ vagrant destroy -f
