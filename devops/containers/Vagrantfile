@@ -7,16 +7,16 @@
 # you're doing.
 Vagrant.configure("2") do |config| 
 
-config.vm.box = "bento/centos-7"
- 
-config.vm.provider "virtualbox" do |vb1|
+    config.vm.box = "bento/centos-7"
+     
+    config.vm.provider "virtualbox" do |vb1|
     vb1.memory = 2048      # Memory size in M.
     vb1.cpus   = 1         # Number of vCPUs
     vb1.name   = "docker-box"   # VM name.
-  end
-  config.vm.network "forwarded_port", guest: 8080, host: 8182 
-  config.vm.network "private_network", ip: "192.168.1.113"
-  config.vm.network "private_network", ip: "192.168.1.114"
+    end
+    config.vm.network "forwarded_port", guest: 8080, host: 8182 
+    config.vm.network "private_network", ip: "192.168.1.113"
+    config.vm.network "private_network", ip: "192.168.1.114"
   
 	# Docker and Ansible Installation and setup 
 	config.vm.provision "shell", inline: <<-SHELL
