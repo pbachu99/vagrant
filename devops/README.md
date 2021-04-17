@@ -5,11 +5,11 @@
 * The Docker container requires specifically more memory
 * To spin up this, 6 GB of memory used, avoiding Kubernetes etc as of now
 
-# Setup script "devops_setup.sh" is there for quick setup of this environment
+* Setup script "devops_setup.sh" is there for quick setup of this environment
 * directories under vagrant is devops folder
 ll /d/git/vagrant/devops 
 ```
-+--- 
++------------ 
 |   +containers/
 |   +devops_setup.sh
 |   +devops_stop.sh 
@@ -17,7 +17,7 @@ ll /d/git/vagrant/devops
 |   +jenkins/
 |   +README.md
 |   +tomcat/    
-+---   
++------------   
 ```
 # Required Software
 * VirtualBox
