@@ -1,13 +1,13 @@
-#############################################################
-# This script installs the necessary DevOps systems         #
-#############################################################
+#####################################################
+# This script stops the necessary DevOps systems    #   
+#####################################################
 
 # NOTE: Change the directory path names as suitable on your system
 # NOTE: in my case the vagrant installed under D Drive on Windows
 
 # usage:  
-# to STOP  use sh script_name.sh jnm or dock or tom
-# Or to start all in one go type on command line
+# to STOP  use sh devops_stop.sh jnm or dock or tom
+# Or to stop all in a one go then type on command line
 # sh devops_stop.sh jnm && sh devops_stop.sh dock && sh devops_stop.sh tom
 
 case "${1}" in
@@ -22,9 +22,9 @@ $var_dir ; $var_stop
 ;;
 
 dock)
-echo "#######################################################"
+echo "################################################"
 echo "# stopping Docker Container and Ansible "
-echo "#######################################################"
+echo "################################################"
 
 var_dir='cd /d/git/vagrant/devops/containers/'
 var_stop='vagrant halt'
@@ -32,9 +32,9 @@ $var_dir ; $var_stop
 ;;
 
 tom)
-echo "#######################################################"
+echo "#################################################"
 echo "# stopping Apache Tomcat "
-echo "#######################################################"
+echo "#################################################"
 
 var_dir='cd /d/git/vagrant/devops/tomcat/'
 var_stop='vagrant halt'

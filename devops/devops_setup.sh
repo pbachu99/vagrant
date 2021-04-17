@@ -1,20 +1,20 @@
 #############################################################
-# This script installs the necessary DevOps systems         #
+# this script installs the necessary DevOps systems         #
 #############################################################
 
-# NOTE: Change the directory path names as suitable on your system
+# NOTE: change the directory path names as suitable on your system
 # NOTE: in my case the vagrant installed under D Drive on Windows
 
 # usage:  
-# to START  use sh script_name.sh jnm or dock or tom
-# Or to start all in one go type on command line
+# to start individual-> sh devops_setup.sh jnm or dock or tom
+# Or to start all in a one go then type on the command line
 # sh devops_setup.sh jnm && sh devops_setup.sh dock && sh devops_setup.sh tom
 
 case "${1}" in
 jnm)
-echo "#############################################"
+echo "#######################################################"
 echo " Installing Jenkins and Maven"
-echo "#############################################"
+echo "#######################################################"
 
 var_dir='cd /d/git/vagrant/devops/jenkins/'
 var_start='vagrant up'
