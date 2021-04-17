@@ -7,15 +7,19 @@ https://www.youtube.com/watch?v=SWYqp7iY_Tc
 
 # Setup git
 https://oracle-base.com/articles/linux/git-cheat-sheet
-
-# the below file is used to ignore the kind of files not used for push and pull etc
-# this is uploaded
-vi .gitignore 
-
 # set config for account
 git config --global user.name "xxxx xxxx"
 git config --global user.email mymail@gmail.com
 git config --list
+
+git init
+git remote add origin [repo-url]
+git remote set-url origin [repo-url]
+git remote -v
+
+# the below file is used to ignore the kind of files not used for push and pull etc
+# this is uploaded
+vi .gitignore 
 
 ++++++ example cloning a publicly open git! In this case Oracle Base +++++++++
 git clone https://github.com/oraclebase/vagrant.git
