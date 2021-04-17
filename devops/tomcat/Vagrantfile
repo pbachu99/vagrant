@@ -7,22 +7,22 @@
 # you're doing.
 Vagrant.configure("2") do |config| 
 
-    config.vm.box = "bento/centos-7"
-      
-    config.vm.provider "virtualbox" do |vb1|
-    vb1.memory = 2048      # Memory size in M.
-    vb1.cpus   = 1         # Number of vCPUs
-    vb1.name   = "tomcat-box"   # VM name.
-    end
-    config.vm.network "forwarded_port", guest: 8080, host: 8183
-    config.vm.network "private_network", ip: "192.168.1.114"
-	
-	# Jenkins and Maven Installation and setup 
-	config.vm.provision "shell", inline: <<-SHELL
-	sh /vagrant/scripts/apache_tomcat_setup.sh
-	SHELL
-	# Test: Create another shared directory 'scripts' 
-	# ignore mount failure. The directory 'scripts' will be mounted
+ config.vm.box = "bento/centos-7"
+   
+ config.vm.provider "virtualbox" do |vb1|
+ vb1.memory = 2048      # Memory size in M.
+ vb1.cpus   = 1         # Number of vCPUs
+ vb1.name   = "tomcat-box"   # VM name.
+ end
+ config.vm.network "forwarded_port", guest: 8080, host: 8183
+ config.vm.network "private_network", ip: "192.168.1.114"
+
+# Jenkins and Maven Installation and setup 
+config.vm.provision "shell", inline: <<-SHELL
+sh /vagrant/scripts/apache_tomcat_setup.sh
+SHELL
+# Test: Create another shared directory 'scripts' 
+# ignore mount failure. The directory 'scripts' will be mounted
 	
 	
   # The most common configuration options are documented and commented below.
