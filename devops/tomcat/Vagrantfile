@@ -17,14 +17,10 @@ Vagrant.configure("2") do |config|
  config.vm.network "forwarded_port", guest: 8080, host: 8183
  config.vm.network "private_network", ip: "192.168.1.114"
 
-# Jenkins and Maven Installation and setup 
-config.vm.provision "shell", inline: <<-SHELL
-sh /vagrant/scripts/apache_tomcat_setup.sh
-SHELL
-# Test: Create another shared directory 'scripts' 
-# ignore mount failure. The directory 'scripts' will be mounted
-	
-	
+ # Jenkins and Maven Installation and setup 
+ config.vm.provision "shell", inline: <<-SHELL
+ sh /vagrant/scripts/apache_tomcat_setup.sh
+ SHELL
   # The most common configuration options are documented and commented below.
   # For a complete reference, please see the online documentation at
   # https://docs.vagrantup.com.
