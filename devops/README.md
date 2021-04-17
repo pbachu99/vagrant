@@ -7,7 +7,7 @@
 
 * Setup script "devops_setup.sh" is there for quick setup of this environment
 * directories under vagrant is devops folder
-ll /d/git/vagrant/devops 
+* ll /d/git/vagrant/devops 
 ```
 +------------ 
 |   +containers/
