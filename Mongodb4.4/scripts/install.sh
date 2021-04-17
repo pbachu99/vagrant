@@ -1,7 +1,6 @@
 # The first step is to setup MongoDB Repository
 
 sudo cat > /etc/yum.repos.d/mongodb-org-4.4.repo <<EOF
-
 [mongodb-org-4.4]
 name=MongoDB Repository
 baseurl=https://repo.mongodb.org/yum/redhat/7/mongodb-org/4.4/x86_64/
