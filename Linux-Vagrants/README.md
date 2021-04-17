@@ -1,15 +1,12 @@
-# Vagrant Builds for pracising major Linux Servers
-* With this we can spin up a single server and multi-servers (3 servers)
+# vagrant builds for pracising major linux servers
+* with this we can spin up a single server and multipule servers 
+* no additional downloads required. An internet connection is required
+* feel free to copy or fork this stuff
 
-* No additional downloads required. An Internet connection is required
-
-* Feel free to copy or fork this stuff. 
-
-## Required Software
+# required software
 * [Vagrant](https://www.vagrantup.com/downloads.html)
 * [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
-* Obviously "Git" installed on your system to work with GitHub
+* "Git" installed on your system to work with GitHub
 
-## Optional Editing Software
-
+# optional editing software
 * Notepad++ Or Visual Studio Editor
