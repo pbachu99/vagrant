@@ -1,5 +1,5 @@
 # vagrant builds for pracising major linux servers
-* with this we can spin up a single server and multipule servers 
+* with this we can spin up a single server and multiple servers 
 * no additional downloads required. An internet connection is required
 * feel free to copy or fork this stuff
 
