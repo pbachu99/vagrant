@@ -23,7 +23,8 @@ $ vagrant.exe up
 MINGW64 /d/git/vagrant/nodes3-linux-cluster/node3
 $ vagrant.exe up
 
-3) verify for SSH connectivity from between servers
+3) verify: SSH connectivity between servers exists now
+
 ````
 
 
