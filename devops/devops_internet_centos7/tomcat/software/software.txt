@@ -1,0 +1,5 @@
+put JAVA downloaded JDK here
+OpenJDK11U-jdk_x64_linux_hotspot_11.0.8_10.tar.gz
+
+and apache-tomcat-9 
+apache-tomcat-9.0.37.tar.gz

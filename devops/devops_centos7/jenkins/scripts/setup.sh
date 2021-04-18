@@ -1,0 +1,1 @@
+sudo bash -c 'sh /vagrant/scripts/jenkins_configure.sh'

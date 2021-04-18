@@ -1,0 +1,9 @@
+### Notes and working
+
+## For more examples and ideas, visit:
+ https://docs.docker.com/get-started/
+
+## Docker Commands as Non-Root User
+# Docker commands run as the "root" user. 
+# You have three choices when if comes to running docker commands
+ https://oracle-base.com/articles/linux/docker-install-docker-on-oracle-linux-ol7

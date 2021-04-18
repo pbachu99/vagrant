@@ -1,0 +1,20 @@
+# Apache Tomcat Installation
+
+# tomcat username and password saved in tomcat.xml file in the software directory
+
+# To install using yum
+# get the geography link to a nearest mirror right click on tar.gz under core: 
+# It shows " copy link location" In this case ApacheTomcat 8 link below
+https://tomcat.apache.org/download-80.cgi
+
+#right click on tar.gz -> copy link location and paste it after wget, as as example below
+sudo wget https://ftp.fau.de/apache/tomcat/tomcat-8/v8.5.59/bin/apache-tomcat-8.5.59.tar.gz
+
+# java related has soft links under if downloaded from internet directly
+# /etc/alternatives/java*
+
+# The browser link http://localhost:8183/host-manager/html
+# has port 8183 to open from your laptop because we set it so in vagrant file
+# if checked for status on vagrant tomcat box
+# curl -I http://localhost:8080
+

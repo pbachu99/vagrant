@@ -1,0 +1,1 @@
+sudo bash -c 'sh /vagrant/scripts/docker_configure.sh'

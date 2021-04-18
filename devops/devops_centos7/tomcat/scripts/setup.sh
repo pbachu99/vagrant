@@ -1,0 +1,1 @@
+sudo bash -c 'sh /vagrant/scripts/apache_tomcat_setup.sh'
