@@ -1,15 +1,15 @@
 # Basic DevOps environment for testing and learning
 * Few things are to be downloaded like plugins. The directories have information
 * Such setup is generally done on Cloud platform, but we can on our PC or Laptop if enough memory available
-* In this setup, most required are dowloaded directly from Inernet
+* In this setup, required sofotware dowloaded directly from the Internet
 * For Apache and Tomcat software downloaded. I was testing both
-
 * This configuration is with least memory allocated. We have to allocate more memory as per the need
 * To spin up this, 6 GB of memory used, avoiding Kubernetes etc as of now
 
-* Setup script "devops_setup.sh" is there for quick setup of this environment
-* directories under vagrant is devops folder
-* ll /d/git/vagrant/devops_internet_centos7/devops 
+# Usage
+* Setup script "devops_setup.sh" installs this environment
+* directory structure under 
+* ll /d/git/vagrant/devops/devops_internet_centos7/
 ```
 +------------ 
 |   +containers/

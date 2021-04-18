@@ -1,13 +1,12 @@
 # Basic DevOps environment for testing and learning
 * Few things are to be downloaded like plugins. The directories have information
 * Such setup is generally done on Cloud platform, but we can on our PC or Laptop if enough memory available
-
 * In this setup, we download required software and save it (see software directory)
-
 * This configuration is with the least memory allocated. We have to allocate more memory as per the need
 * To spin up this, 6 GB of memory used, avoiding Kubernetes etc as of now
 
-* Setup script "devops_setup.sh" is there for quick setup of this environment
+# Usage
+* Setup script "devops_setup.sh" installs this environment if software downloaded
 * directories under vagrant is devops folder
 * ll /d/git/vagrant/devops/devops_centos7/ 
 ```
