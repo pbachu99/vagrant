@@ -7,7 +7,7 @@
 
 # Usage
 * Setup script "devops_setup.sh" installs this environment if software downloaded
-* directories under vagrant is devops folder
+* directories structure
 * ll /d/git/vagrant/devops/devops_centos7/ 
 ```
 +------------ 

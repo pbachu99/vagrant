@@ -8,7 +8,7 @@
 
 # Usage
 * Setup script "devops_setup.sh" installs this environment
-* directory structure under 
+* directories structure 
 * ll /d/git/vagrant/devops/devops_internet_centos7/
 ```
 +------------ 
