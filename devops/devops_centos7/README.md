@@ -22,10 +22,10 @@
 +------------   
 ```
 # Required Software 
-* Maven 3.6.3 used 
+* Maven 3.6.3 used which can be downloaded from 
 * https://downloads.apache.org/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz
 * [OpenJDK 11](https://adoptopenjdk.net/releases.html?variant=openjdk11&jvmVariant=hotspot#x64_linux)
-* For Jenkins downloaded directly from internet
+* Jenkins downloaded directly from internet
 * Apache Tomcat download - apache-tomcat-9.0.37.tar.gz
 * VirtualBox
 * Vagrant
