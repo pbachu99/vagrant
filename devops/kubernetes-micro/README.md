@@ -14,6 +14,7 @@ $ vagrant.exe up
 
 2. Open 3 windows to startup 3 Nodes in a go and SSH Setup configures between them
 MINGW64 /d/git/vagrant/devops/kubernetes-micro/node1 
+$ vagrant.exe up
 
 MINGW64 /d/git/vagrant/devops/kubernetes-micro/node2
 $ vagrant.exe up
