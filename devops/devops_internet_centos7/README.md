@@ -2,7 +2,7 @@
 * Few things are to be downloaded like plugins. The directories have information
 * Such setup is generally done on Cloud platform, but we can on our PC or Laptop if enough memory available
 * In this setup, required sofotware dowloaded directly from the Internet
-* For Apache and Tomcat software downloaded. I was testing both
+* For Apache Tomcat the software downloaded (I was testing both)
 * This configuration is with least memory allocated. We have to allocate more memory as per the need
 * To spin up this, 6 GB of memory used, avoiding Kubernetes etc as of now
 
