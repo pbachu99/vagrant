@@ -9,7 +9,7 @@ dnf install -y oracle-epel-release-el8
 dnf install -y sshpass
 
 echo "******************************************************************************"
-echo "Add extra OS packages. Most should be present." `date`
+echo " Add extra OS packages. Most should be present." `date`
 echo "******************************************************************************"
 dnf install -y bc    
 dnf install -y binutils
@@ -51,10 +51,10 @@ dnf install -y targetcli # ACFS
 dnf install -y smartmontools
 dnf install -y sysstat
 
-# Added by me.
+## Added by me.
 dnf install -y unixODBC
 
-# New for OL8
+## New for OL8
 dnf install -y libnsl
 dnf install -y libnsl.i686
 dnf install -y libnsl2

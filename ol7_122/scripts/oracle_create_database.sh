@@ -1,3 +1,5 @@
+. /vagrant/config/install.env
+
 echo "******************************************************************************"
 echo "Create a listener.ora file if it doesn't already exist." `date`
 echo "******************************************************************************"
@@ -89,6 +91,44 @@ EOF
   sed -i -e "s|${ORACLE_SID}:${ORACLE_HOME}:N|${ORACLE_SID}:${ORACLE_HOME}:Y|g" /tmp/oratab
   cp -f /tmp/oratab /etc/oratab
 
- fi
+
+  if [ "$INSTALL_APEX" = "true" ]; then
+
+    echo "******************************************************************************"
+    echo "Unzip APEX software." `date`
+    echo "******************************************************************************"
+    cd ${SOFTWARE_DIR}
+    unzip -oq /vagrant/software/${APEX_SOFTWARE}
+    cd apex
+
+
+    echo "******************************************************************************"
+    echo "Install APEX." `date`
+    echo "******************************************************************************"
+    sqlplus / as sysdba <<EOF
+alter session set container = ${PDB_NAME};
+create tablespace apex datafile size 1m autoextend on next 1m;
+@apexins.sql APEX APEX TEMP /i/
+BEGIN
+    APEX_UTIL.set_security_group_id( 10 );
+
+    APEX_UTIL.create_user(
+        p_user_name       => 'ADMIN',
+        p_email_address   => '${APEX_EMAIL}',
+        p_web_password    => '${APEX_PASSWORD}',
+        p_developer_privs => 'ADMIN' );
+
+    APEX_UTIL.set_security_group_id( null );
+    COMMIT;
+END;
+/
+@apex_rest_config.sql "${APEX_PASSWORD}" "${APEX_PASSWORD}"
+--@apex_epg_config.sql ${SOFTWARE_DIR}
+alter user APEX_PUBLIC_USER identified by "${APEX_PASSWORD}" account unlock;
+alter user APEX_REST_PUBLIC_USER identified by "${APEX_PASSWORD}" account unlock;
+exit;
+EOF
+
+  fi
 
 fi
