@@ -1,5 +1,5 @@
 echo "******************************************************************************"
-echo "Amend hosts file with SCAN IPs." `date`
+echo "Amend hosts file with Kubernetes Cluster IPs." `date`
 echo "******************************************************************************"
 cat >> /etc/hosts <<EOF
 # Kubernetes

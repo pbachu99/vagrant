@@ -29,6 +29,11 @@ yum install -y dnsmasq
 systemctl enable dnsmasq
 systemctl restart dnsmasq
 
+#other packages relevant to dns
+#dnf install -y bc    
+dnf install -y binutils*
+dnf install -y bind-utils*
+
 echo "******************************************************************************"
 echo "Setup End." `date`
 echo "******************************************************************************"

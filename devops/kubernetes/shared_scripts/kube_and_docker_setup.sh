@@ -10,7 +10,7 @@ systemctl restart docker.service
 systemctl is-enabled docker.service
 #systemctl status docker.service
 
-cat <<EOF > /etc/yum.repos.d/kubernetes.repo
+cat > /etc/yum.repos.d/kubernetes.repo <<EOF
 [kubernetes]
 name=Kubernetes
 baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
@@ -25,7 +25,6 @@ dnf install -y kubeadm
 systemctl enable kubelet.service
 systemctl restart kubelet.service 
 #systemctl start kubelet.service 
-
 
 #on master node
 #kubeadm init

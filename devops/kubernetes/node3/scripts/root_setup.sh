@@ -31,7 +31,7 @@ echo "Set Hostname." `date`
 echo "******************************************************************************"
 hostnamectl set-hostname ${NODE3_HOSTNAME}
 
-su - alladmin -c 'sh /vagrant/scripts/oracle_user_environment_setup.sh'
+su - alladmin -c 'sh /vagrant/scripts/alladmin_environment_setup.sh'
 . /home/alladmin/scripts/setEnv.sh
 
 echo "******************************************************************************"
