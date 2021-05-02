@@ -1,32 +1,47 @@
+echo "******************************************************************************"
+echo "Setup Start." `date`
+echo "******************************************************************************"
+useradd alladmin
 . /vagrant_config/install.env
 
-echo "******************************************************************************"
-echo "Create environment scripts." `date`
-echo "******************************************************************************"
-mkdir -p /home/alladmin/scripts
+sh /vagrant_scripts/install_os_packages.sh
+sh /vagrant_scripts/kubernetes_and_docker_setup.sh
 
-cat > /home/alladmin/scripts/setEnv.sh <<EOF
-# alladmin Settings
-export TMP=/tmp
-export TMPDIR=\$TMP
-export HOSTNAME=${NODE1_FQ_HOSTNAME}
-export BASE_PATH=/usr/sbin:\$PATH
+echo "******************************************************************************"
+echo "Set root and alladmin password " `date`
+echo "******************************************************************************"
+echo -e "${ROOT_PASSWORD}\n${ROOT_PASSWORD}" | passwd
+echo -e "${ALLADMIN_PASSWORD}\n${ALLADMIN_PASSWORD}" | passwd alladmin
+# creating an alladmin account for all activities
+usermod -aG vagrant alladmin
+echo "alladmin    ALL=(ALL)      ALL" | sudo tee -a /etc/sudoers
+
+sh /vagrant_scripts/configure_hosts_base.sh
+#sh /vagrant_scripts/configure_hosts_scan.sh
+
+cat > /etc/resolv.conf <<EOF
+search localdomain
+nameserver ${DNS_PUBLIC_IP}
 EOF
 
-cat >> /home/alladmin/.bash_profile <<EOF
-. /home/alladmin/scripts/setEnv.sh
-EOF
+# Stop NetworkManager altering the /etc/resolve.conf contents.
+sed -i -e "s|\[main\]|\[main\]\ndns=none|g" /etc/NetworkManager/NetworkManager.conf
+systemctl restart NetworkManager.service
 
 echo "******************************************************************************"
-echo "Create directories." `date`
+echo "Set Hostname." `date`
 echo "******************************************************************************"
-. /home/alladmin/scripts/setEnv.sh
+hostnamectl set-hostname ${NODE1_HOSTNAME}
 
+echo "******************************************************************************"
+echo "If nslookup doesn't ping, Kubernetes configure script fails"
+echo "Restart DNS Server/cent8_dns with vagrant halt/up if no servers reached seen"
+echo "******************************************************************************"
 nslookup cent8-sys1
 sleep 60
 
 echo "******************************************************************************"
-echo "Passwordless SSH Setup for alladmin." `date`
+echo "Passwordless SSH Setup for root." `date`
 echo "******************************************************************************"
 mkdir -p ~/.ssh
 chmod 700 ~/.ssh
@@ -41,17 +56,17 @@ ssh-keyscan -H localhost >> ~/.ssh/known_hosts
 chmod -R 700 ~/.ssh
 chmod 600 ~/.ssh/authorized_keys
 ssh ${NODE1_HOSTNAME} date
-echo "${AllADMIN_PASSWORD}" > /tmp/temp2.txt
+echo "${ROOT_PASSWORD}" > /tmp/temp1.txt
 
 ssh-keyscan -H ${NODE2_HOSTNAME} >> ~/.ssh/known_hosts
 ssh-keyscan -H ${NODE2_FQ_HOSTNAME} >> ~/.ssh/known_hosts
 ssh-keyscan -H ${NODE2_PUBLIC_IP} >> ~/.ssh/known_hosts
+sshpass -f /tmp/temp1.txt ssh-copy-id ${NODE2_HOSTNAME}
+
 ssh-keyscan -H ${NODE3_HOSTNAME} >> ~/.ssh/known_hosts
 ssh-keyscan -H ${NODE3_FQ_HOSTNAME} >> ~/.ssh/known_hosts
 ssh-keyscan -H ${NODE3_PUBLIC_IP} >> ~/.ssh/known_hosts
-
-sshpass -f /tmp/temp2.txt ssh-copy-id ${NODE2_HOSTNAME} 
-sshpass -f /tmp/temp2.txt ssh-copy-id ${NODE3_HOSTNAME}
+sshpass -f /tmp/temp1.txt ssh-copy-id ${NODE3_HOSTNAME}
 
 cat > /tmp/ssh-setup.sh <<EOF
 ssh-keyscan -H ${NODE1_HOSTNAME} >> ~/.ssh/known_hosts
@@ -64,8 +79,12 @@ ssh-keyscan -H ${NODE3_HOSTNAME} >> ~/.ssh/known_hosts
 ssh-keyscan -H ${NODE3_FQ_HOSTNAME} >> ~/.ssh/known_hosts
 ssh-keyscan -H ${NODE3_PUBLIC_IP} >> ~/.ssh/known_hosts
 ssh-keyscan -H localhost >> ~/.ssh/known_hosts
-#sshpass -f /tmp/temp2.txt ssh-copy-id ${NODE1_HOSTNAME}
+sshpass -f /tmp/temp1.txt ssh-copy-id ${NODE1_HOSTNAME}
 EOF
 
 ssh ${NODE2_HOSTNAME} 'bash -s' < /tmp/ssh-setup.sh
 ssh ${NODE3_HOSTNAME} 'bash -s' < /tmp/ssh-setup.sh
+
+su - alladmin -c 'sh /vagrant/scripts/alladmin_environment_setup.sh'
+
+su - root -c 'sh /vagrant_scripts/kubernetes_configure_master.sh'

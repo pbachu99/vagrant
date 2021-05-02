@@ -9,7 +9,7 @@ cat > /home/alladmin/scripts/setEnv.sh <<EOF
 # alladmin Settings
 export TMP=/tmp
 export TMPDIR=\$TMP
-export HOSTNAME=${NODE3_FQ_HOSTNAME}
+export NODE3_HOST=${NODE3_FQ_HOSTNAME}
 export BASE_PATH=/usr/sbin:\$PATH
 EOF
 
@@ -21,9 +21,6 @@ echo "**************************************************************************
 echo "Create directories." `date`
 echo "******************************************************************************"
 . /home/alladmin/scripts/setEnv.sh
-
-nslookup cent8-sys1
-sleep 60
 
 echo "******************************************************************************"
 echo "Passwordless SSH Setup for alladmin." `date`

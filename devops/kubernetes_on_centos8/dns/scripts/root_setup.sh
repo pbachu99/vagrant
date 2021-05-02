@@ -14,7 +14,7 @@ sed -i -e "s|\[main\]|\[main\]\ndns=none|g" /etc/NetworkManager/NetworkManager.c
 systemctl restart NetworkManager.service
 
 sh /vagrant_scripts/configure_hosts_base.sh
-sh /vagrant_scripts/configure_hosts_scan.sh
+#sh /vagrant_scripts/configure_hosts_scan.sh
 
 echo "******************************************************************************"
 echo "Firewall." `date`

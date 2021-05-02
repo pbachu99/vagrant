@@ -13,7 +13,7 @@ node1:
   mem_size: 4048
   cpus: 2
   public_ip: 192.168.56.110
-  private_ip: 192.168.56.181
+  #private_ip: 192.168.56.181
   
 
 node2:
@@ -21,13 +21,12 @@ node2:
   mem_size: 4048
   cpus: 2
   public_ip: 192.168.56.111
-  private_ip: 192.168.56.182
+  #private_ip: 192.168.56.182
   
 node3:
   vm_name: cent8_sys3
   mem_size: 4048
   cpus: 2
   public_ip: 192.168.56.112
-  private_ip: 192.168.56.183
-
+  #private_ip: 192.168.56.183
 

@@ -1,41 +1,29 @@
-echo "******************************************************************************"
-echo "Setup Start." `date`
-echo "******************************************************************************"
-useradd alladmin
 . /vagrant_config/install.env
 
-sh /vagrant_scripts/install_os_packages.sh
-sh /vagrant_scripts/kube_and_docker_setup.sh
-
 echo "******************************************************************************"
-echo "Set root and alladmin password " `date`
+echo "Create environment scripts." `date`
 echo "******************************************************************************"
-echo -e "${ROOT_PASSWORD}\n${ROOT_PASSWORD}" | passwd
-echo -e "${ALLADMIN_PASSWORD}\n${ALLADMIN_PASSWORD}" | passwd alladmin
-usermod -aG vagrant alladmin
+mkdir -p /home/alladmin/scripts
 
-sh /vagrant_scripts/configure_hosts_base.sh
-#sh /vagrant_scripts/configure_hosts_scan.sh
-
-cat > /etc/resolv.conf <<EOF
-search localdomain
-nameserver ${DNS_PUBLIC_IP}
+cat > /home/alladmin/scripts/setEnv.sh <<EOF
+# alladmin Settings
+export TMP=/tmp
+export TMPDIR=\$TMP
+export NODE1_HOST=${NODE1_FQ_HOSTNAME}
+export BASE_PATH=/usr/sbin:\$PATH
 EOF
 
-# Stop NetworkManager altering the /etc/resolve.conf contents.
-sed -i -e "s|\[main\]|\[main\]\ndns=none|g" /etc/NetworkManager/NetworkManager.conf
-systemctl restart NetworkManager.service
+cat >> /home/alladmin/.bash_profile <<EOF
+. /home/alladmin/scripts/setEnv.sh
+EOF
 
 echo "******************************************************************************"
-echo "Set Hostname." `date`
+echo "Create directories." `date`
 echo "******************************************************************************"
-hostnamectl set-hostname ${NODE1_HOSTNAME}
-
-su - alladmin -c 'sh /vagrant/scripts/alladmin_environment_setup.sh'
 . /home/alladmin/scripts/setEnv.sh
 
 echo "******************************************************************************"
-echo "Passwordless SSH Setup for root." `date`
+echo "Passwordless SSH Setup for alladmin." `date`
 echo "******************************************************************************"
 mkdir -p ~/.ssh
 chmod 700 ~/.ssh
@@ -50,19 +38,19 @@ ssh-keyscan -H localhost >> ~/.ssh/known_hosts
 chmod -R 700 ~/.ssh
 chmod 600 ~/.ssh/authorized_keys
 ssh ${NODE1_HOSTNAME} date
-echo "${ROOT_PASSWORD}" > /tmp/temp1.txt
+echo "${AllADMIN_PASSWORD}" > /tmp/temp2.txt
 
 ssh-keyscan -H ${NODE2_HOSTNAME} >> ~/.ssh/known_hosts
 ssh-keyscan -H ${NODE2_FQ_HOSTNAME} >> ~/.ssh/known_hosts
 ssh-keyscan -H ${NODE2_PUBLIC_IP} >> ~/.ssh/known_hosts
-sshpass -f /tmp/temp1.txt ssh-copy-id ${NODE2_HOSTNAME}
-
 ssh-keyscan -H ${NODE3_HOSTNAME} >> ~/.ssh/known_hosts
 ssh-keyscan -H ${NODE3_FQ_HOSTNAME} >> ~/.ssh/known_hosts
 ssh-keyscan -H ${NODE3_PUBLIC_IP} >> ~/.ssh/known_hosts
-sshpass -f /tmp/temp1.txt ssh-copy-id ${NODE3_HOSTNAME}
 
-cat > /tmp/ssh-setup.sh <<EOF
+sshpass -f /tmp/temp2.txt ssh-copy-id ${NODE2_HOSTNAME} 
+sshpass -f /tmp/temp2.txt ssh-copy-id ${NODE3_HOSTNAME}
+
+cat > /tmp/ssh-setup2.sh <<EOF
 ssh-keyscan -H ${NODE1_HOSTNAME} >> ~/.ssh/known_hosts
 ssh-keyscan -H ${NODE1_FQ_HOSTNAME} >> ~/.ssh/known_hosts
 ssh-keyscan -H ${NODE1_PUBLIC_IP} >> ~/.ssh/known_hosts
@@ -73,15 +61,8 @@ ssh-keyscan -H ${NODE3_HOSTNAME} >> ~/.ssh/known_hosts
 ssh-keyscan -H ${NODE3_FQ_HOSTNAME} >> ~/.ssh/known_hosts
 ssh-keyscan -H ${NODE3_PUBLIC_IP} >> ~/.ssh/known_hosts
 ssh-keyscan -H localhost >> ~/.ssh/known_hosts
-sshpass -f /tmp/temp1.txt ssh-copy-id ${NODE1_HOSTNAME}
+#sshpass -f /tmp/temp2.txt ssh-copy-id ${NODE1_HOSTNAME}
 EOF
 
-ssh ${NODE2_HOSTNAME} 'bash -s' < /tmp/ssh-setup.sh
-ssh ${NODE3_HOSTNAME} 'bash -s' < /tmp/ssh-setup.sh
-
-swapoff -a 
-#kubeadm config images pull
-
-echo "******************************************************************************"
-echo "Setup End." `date`
-echo "******************************************************************************"
+ssh ${NODE2_HOSTNAME} 'bash -s' < /tmp/ssh-setup2.sh
+ssh ${NODE3_HOSTNAME} 'bash -s' < /tmp/ssh-setup2.sh
