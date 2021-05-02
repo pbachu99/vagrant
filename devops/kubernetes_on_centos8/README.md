@@ -8,12 +8,13 @@ Note:
 + For any reason you could not start DNS Server Box once then the Kubernetes Cluster fails
 + That can be fixed without any issue. Check the file 'fix_kubernetes_cluster_setup_fails' for steps
 ```
-* This setup has DNS Server (dnsmasq) with 3 Nodes: 
+* This setup has DNS Server (dnsmasq) with 3 Nodes:
 * node1 as master and the rest two nodes are worker nodes
+
 * This setup has no extra storage configuration at this moment
-# steps to spin up 
+# Steps to spin up 
 ```
-On my system it is under D drive
+on my system it is under D drive
 1. Start up DNS Server 
 /d/git/vagrant/devops/kubernetes_on_centos8/dns 
 $ vagrant up
