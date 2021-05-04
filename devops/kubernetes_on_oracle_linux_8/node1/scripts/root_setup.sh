@@ -17,7 +17,6 @@ usermod -aG vagrant alladmin
 echo "alladmin    ALL=(ALL)      ALL" | sudo tee -a /etc/sudoers
 
 sh /vagrant_scripts/configure_hosts_base.sh
-#sh /vagrant_scripts/configure_hosts_scan.sh
 
 cat > /etc/resolv.conf <<EOF
 search localdomain
@@ -35,9 +34,9 @@ hostnamectl set-hostname ${NODE1_HOSTNAME}
 
 echo "******************************************************************************"
 echo "If nslookup doesn't ping, Kubernetes configure script fails"
-echo "Restart DNS Server/cent8_dns with vagrant halt/up if no servers reached seen"
+echo "Restart DNS Server/oracle8_dns with vagrant halt/up if no servers reached seen"
 echo "******************************************************************************"
-nslookup cent8-sys1
+nslookup oracle8-sys1
 sleep 60
 
 echo "******************************************************************************"
@@ -85,6 +84,4 @@ EOF
 ssh ${NODE2_HOSTNAME} 'bash -s' < /tmp/ssh-setup.sh
 ssh ${NODE3_HOSTNAME} 'bash -s' < /tmp/ssh-setup.sh
 
-su - alladmin -c 'sh /vagrant/scripts/alladmin_environment_setup.sh'
-
-sudo bash -c 'sh /vagrant_scripts/kubernetes_configure_master.sh'
+su - root -c 'sh /vagrant_scripts/kubernetes_configure_master.sh'

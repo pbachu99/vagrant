@@ -1,8 +1,8 @@
-# Kubernetes Cluster setup on Centos8 with a base memory of 13 GB 
+# Kubernetes Cluster setup on Oracle Linux 8 with a base memory of 13 GB 
 ```
 Note:
 + It took nearly 20 Minutes with 13 GB Memory (Each Node with 4 GB of Memory)
-+ You can also spin up with 7 GB (Each Node with 2 GB of Memory), but takes time
++ You can also spin up with 7 GB (Each Node with 2 GB of Memory), but it takes time
 
 + This setup has token key generated and assigned for Nodes to join the Kubernetes Cluster
 + For any reason you could not start DNS Server Box once then the Kubernetes Cluster fails
@@ -16,18 +16,18 @@ Note:
 ```
 on my system it is under D drive
 1. Start up DNS Server 
-/d/git/vagrant/devops/kubernetes_on_centos8/dns 
+/d/git/vagrant/devops/kubernetes_on_oracle_linux_8/dns 
 $ vagrant up
 
 2. Open 3 windows to startup 3 Nodes, all done in a go and SSH Setup configures between Nodes too
-MINGW64 /d/git/vagrant/devops/kubernetes_on_centos8/node1 
+MINGW64 /d/git/vagrant/devops/kubernetes_on_oracle_linux_8/node1 
 $ vagrant up
 
-MINGW64 /d/git/vagrant/devops/kubernetes_on_centos8/node2
+MINGW64 /d/git/vagrant/devops/kubernetes_on_oracle_linux_8/node2
 $ vagrant up
 
 $ vagrant.exe up
-MINGW64 /d/git/vagrant/devops/kubernetes_on_centos8/node3 
+MINGW64 /d/git/vagrant/devops/kubernetes_on_oracle_linux_8/node3 
 $ vagrant up
 ```
 

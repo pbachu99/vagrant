@@ -3,23 +3,19 @@ echo "Prepare yum repos and install base packages." `date`
 echo "******************************************************************************"
 echo "nameserver 8.8.8.8" >> /etc/resolv.conf
 
-dnf install -y dnf-utils zip unzip
 echo "******************************************************************************"
 echo " Setup of EPEL Repo"
 echo "******************************************************************************"
-yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
-
-#on CentOS 8 it is recommended to also enable the powertools repository since EPEL packages may depend on packages from it:
-#dnf config-manager --set-enabled powertools
-
-dnf install -y sshpass
+yum install -y oracle-epel-release-el8
+yum-config-manager --enable ol8_developer_EPEL
 
 echo "******************************************************************************"
 echo " Add extra OS packages. Most should be present." `date`
 echo "******************************************************************************"
-dnf install -y bc    
+#dnf install -y bc    
 dnf install -y binutils
 dnf install -y bind-utils
+yum install -y yum-utils sshpass zip unzip
 #dnf install -y compat-libcap1
 #dnf install -y compat-libstdc++-33
 #dnf install -y dtrace-modules

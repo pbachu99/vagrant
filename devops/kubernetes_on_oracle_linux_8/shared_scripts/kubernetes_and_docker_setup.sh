@@ -27,3 +27,5 @@ dnf install -y kubeadm
 
 systemctl enable kubelet.service
 systemctl restart kubelet.service 
+
+
