@@ -18,14 +18,16 @@ echo "alladmin    ALL=(ALL)      ALL" | sudo tee -a /etc/sudoers
 
 sh /vagrant_scripts/configure_hosts_base.sh
 
-cat > /etc/resolv.conf <<EOF
-search localdomain
-nameserver ${DNS_PUBLIC_IP}
-EOF
+echo "nameserver 192.168.56.100" >> /etc/resolv.conf
+#echo "nameserver 8.8.8.8" >> /etc/resolv.conf
+#cat > /etc/resolv.conf <<EOF
+#search localdomain
+#nameserver ${DNS_PUBLIC_IP}
+#EOF
 
 # Stop NetworkManager altering the /etc/resolve.conf contents.
-sed -i -e "s/NETCONFIG_DNS_POLICY="auto"/NETCONFIG_DNS_POLICY=" "/g" /etc/sysconfig/network/config
-sed -i -e "'s/NETCONFIG_DNS_POLICY="auto"/NETCONFIG_DNS_POLICY=" "/g'" /etc/sysconfig/network/config
+#grep "NETCONFIG_DNS_POLICY" /etc/sysconfig/network/config
+sed -i -e 's/NETCONFIG_DNS_POLICY="auto"/NETCONFIG_DNS_POLICY=''/g' /etc/sysconfig/network/config
 #systemctl restart NetworkManager.service
 systemctl enable systemd-networkd
 systemctl restart systemd-networkd
