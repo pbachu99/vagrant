@@ -5,7 +5,7 @@ useradd -b /home/alladmin -s /bin/bash alladmin
 . /vagrant_config/install.env
 
 sh /vagrant_scripts/install_os_packages.sh
-sh /vagrant_scripts/kubernetes_and_docker_setup.sh
+#sh /vagrant_scripts/kubernetes_and_docker_setup.sh
 
 echo "******************************************************************************"
 echo "Set root and alladmin password " `date`
@@ -18,16 +18,13 @@ echo "alladmin    ALL=(ALL)      ALL" | sudo tee -a /etc/sudoers
 
 sh /vagrant_scripts/configure_hosts_base.sh
 
-echo "nameserver 192.168.56.100" >> /etc/resolv.conf
-#echo "nameserver 8.8.8.8" >> /etc/resolv.conf
-#cat > /etc/resolv.conf <<EOF
-#search localdomain
-#nameserver ${DNS_PUBLIC_IP}
-#EOF
+sed -i -e 's/NETCONFIG_DNS_STATIC_SEARCHLIST=""/NETCONFIG_DNS_STATIC_SEARCHLIST="localdomain"/g' /etc/sysconfig/network/config 
+sed -i -e 's/NETCONFIG_DNS_STATIC_SERVERS=""/NETCONFIG_DNS_STATIC_SERVERS="192.168.56.100 8.8.8.8"/g' /etc/sysconfig/network/config
+netconfig update -f 
 
 # Stop NetworkManager altering the /etc/resolve.conf contents.
 #grep "NETCONFIG_DNS_POLICY" /etc/sysconfig/network/config
-sed -i -e 's/NETCONFIG_DNS_POLICY="auto"/NETCONFIG_DNS_POLICY=''/g' /etc/sysconfig/network/config
+#sed -i -e 's/NETCONFIG_DNS_POLICY="auto"/NETCONFIG_DNS_POLICY=''/g' /etc/sysconfig/network/config
 #systemctl restart NetworkManager.service
 systemctl enable systemd-networkd
 systemctl restart systemd-networkd
@@ -89,4 +86,4 @@ EOF
 ssh ${NODE2_HOSTNAME} 'bash -s' < /tmp/ssh-setup.sh
 ssh ${NODE3_HOSTNAME} 'bash -s' < /tmp/ssh-setup.sh
 
-su - root -c 'sh /vagrant_scripts/kubernetes_configure_master.sh'
+#su - root -c 'sh /vagrant_scripts/kubernetes_configure_master.sh'

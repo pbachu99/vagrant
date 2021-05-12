@@ -4,23 +4,18 @@ echo "**************************************************************************
 
 . /vagrant_config/install.env
 
-echo "******************************************************************************"
-echo "Set DNS Network." `date`
-echo "******************************************************************************"
+#echo "******************************************************************************"
+#echo "Set DNS Network." `date`
+#echo "******************************************************************************"
 hostnamectl set-hostname ${DNS_HOSTNAME}
 
 # Stop NetworkManager altering the /etc/resolve.conf contents.
 #grep "NETCONFIG_DNS_POLICY" /etc/sysconfig/network/config
 #sed -i -e "s|\[main\]|\[main\]\ndns=none|g" /etc/NetworkManager/NetworkManager.conf
-sed -i -e 's/NETCONFIG_DNS_POLICY="auto"/NETCONFIG_DNS_POLICY=''/g' /etc/sysconfig/network/config
- 
-#cat > /etc/resolv.conf <<EOF
-#search localdomain
-#nameserver ${DNS_PUBLIC_IP}
-#EOF
-
-echo "nameserver 192.168.56.100" >> /etc/resolv.conf
-echo "nameserver 8.8.8.8" >> /etc/resolv.conf
+#sed -i -e 's/NETCONFIG_DNS_POLICY="auto"/NETCONFIG_DNS_POLICY=''/g' /etc/sysconfig/network/config
+sed -i -e 's/NETCONFIG_DNS_STATIC_SEARCHLIST=""/NETCONFIG_DNS_STATIC_SEARCHLIST="localdomain"/g' /etc/sysconfig/network/config 
+sed -i -e 's/NETCONFIG_DNS_STATIC_SERVERS=""/NETCONFIG_DNS_STATIC_SERVERS="192.168.56.100 8.8.8.8"/g' /etc/sysconfig/network/config
+netconfig update -f 
 
 #systemctl restart NetworkManager.service
 systemctl enable systemd-networkd
