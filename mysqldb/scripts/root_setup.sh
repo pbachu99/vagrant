@@ -1,7 +1,7 @@
-sudo mkdir -p /root/software/
-sudo mkdir -p /root/scripts/
-sudo cp -f /vagrant/software/* /root/software/
-sudo cp -f /vagrant/scripts/* /root/scripts/
+mkdir -p /root/software/
+mkdir -p /root/scripts/
+cp -f /vagrant/software/* /root/software/
+cp -f /vagrant/scripts/* /root/scripts/
 chmod 775 /root/software/*
 chmod 775 /root/scripts/*
 
