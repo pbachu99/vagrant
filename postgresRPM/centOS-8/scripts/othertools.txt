@@ -2,7 +2,7 @@ https://dbeaver.io/download/
 https://omnidb.org/#downloads
 
 echo "******************************************************************************"
-echo " Setup for Snap for DBeaver"
+echo " Setup Snap for DBeaver"
 echo "******************************************************************************"
 #sudo dnf --enablerepo=epel install snapd -y
 dnf install -y snapd 
