@@ -1,0 +1,49 @@
+# Notes # connecting and working
+
+vagrant ssh (connecting to server)
+su - root
+and password for root is vagrant
+
+# Postgres repository 
+ll /etc/yum.repos.d/pgdg-redhat-all.repo
+
+# Default directories for postgres 13 
+ll /var/lib/pgsql/13/data/
+ll /usr/pgsql-13/bin/
+ll /var/lib/pgsql/13
+
+# configuration file of postgres 13
+postgresql.conf 
+ll /var/lib/pgsql/13/data/postgresql.conf 
+
+# checks for 13
+grep listen_addresses /var/lib/pgsql/13/data/postgresql.conf 
+grep -v -E "^#|^$" /var/lib/pgsql/13/data/pg_hba.conf 
+
+# creating test user and test database
+su - postgres
+createuser pgguy
+createdb testdb -O pgguy
+# it is usename but not username
+psql -c "select usename from pg_user;"
+
+# list of databases
+psql -l
+
+# connect to testdb
+su - pgguy
+psql testdb
+# show user roles
+testdb=> \du
+
+# show databases
+testdb=> \l
+
+# show tables
+testdb=> \dt 
+
+# exit
+testdb=> \q 
+
+# remove testdb
+[pgguy@pgres13]$ dropdb testdb 

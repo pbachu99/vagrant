@@ -8,21 +8,21 @@
 # you're doing.
 Vagrant.configure("2") do |config| 
 
-config.vm.box = "bento/centos-7" 
+config.vm.box = "bento/centos-8" 
 config.vm.provider "virtualbox" do |vb|
 # Customize the amount of CPU and Memory on the VMs:
-vb.memory = 2048
+vb.memory = 4048
 vb.cpus   =  2
-vb.name   = "vag_postgres"
+vb.name   = "vag_pgres13"
 end    		
    	
-config.vm.hostname = "pgres-sys" 
+#config.vm.hostname = "pgres-sys" 
 config.vm.network "private_network", ip: "192.168.1.108"
 #opening the ports 	
-config.vm.network "forwarded_port", guest: 8080, host: 8080
+#config.vm.network "forwarded_port", guest: 8080, host: 8080
 config.vm.network "forwarded_port", guest: 80, host: 80
 config.vm.network "forwarded_port", guest: 5432, host: 5432
-config.vm.network "forwarded_port", guest: 5433, host: 5433
+#config.vm.network "forwarded_port", guest: 5433, host: 5433
 #setup Postgresql	
 config.vm.provision "shell", inline: <<-SHELL
 sh /vagrant/scripts/setup.sh
