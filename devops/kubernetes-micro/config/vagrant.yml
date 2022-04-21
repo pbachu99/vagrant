@@ -1,5 +1,5 @@
 shared:
-  box: bento/centos-8
+  box: bento/centos-8.4
   non_rotational: 'on'
   
 dns:
